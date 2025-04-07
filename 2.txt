@@ -1,0 +1,19 @@
+Aggregate Method:
+
+We’re inserting n elements into a dynamic array that doubles its size when it runs out of space. A normal insert just puts the value in and takes 1 unit of time. But when the array is full, it needs to resize and copy all the elements over to a new, bigger array. That copy operation is what adds to the cost.
+
+If we look at all the times the array resizes, we end up copying 1, 2, 4, 8, ... up to about n/2 elements over time. The total number of copies across all resizes ends up being less than n.
+
+So overall, we’re doing around n work for inserting and another n for all the copying. That’s about 2n total work, and since we did n operations, the amortized cost per insert is 2n / n = 2, which is O(1).
+
+Accounting Method:
+
+Here, we kind of prepay for the expensive operations. Say we pretend every insert costs 3 units.
+
+1 unit goes to the actual insert.
+
+2 units we save for later, to help pay for copying when a resize happens.
+
+When resizing happens, we need to copy each element once. Since we’ve saved 2 units per element, we’ve got enough to pay for all the copying when it comes time to resize.
+
+So each insert is “charged” 3 units consistently, and that covers everything—even the expensive resizes. So the amortized cost is constant: O(1).
